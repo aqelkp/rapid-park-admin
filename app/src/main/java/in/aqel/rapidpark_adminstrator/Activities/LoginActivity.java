@@ -20,7 +20,7 @@ import com.firebase.client.FirebaseError;
 import in.aqel.quickparksdk.Objects.User;
 import in.aqel.quickparksdk.Utils.PrefUtils;
 import in.aqel.rapidpark_adminstrator.R;
-import in.aqel.rapidpark_adminstrator.Utils.AppConstants;
+import in.aqel.quickparksdk.Utils.AppConstants;
 
 /**
  * A login screen that offers login via email/password.

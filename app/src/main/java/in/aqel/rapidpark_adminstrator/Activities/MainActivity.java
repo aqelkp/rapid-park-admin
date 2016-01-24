@@ -3,6 +3,11 @@ package in.aqel.rapidpark_adminstrator.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -10,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.firebase.client.AuthData;
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -18,21 +22,42 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import in.aqel.quickparksdk.Objects.Parking;
+import in.aqel.quickparksdk.Utils.PrefUtils;
+import in.aqel.rapidpark_adminstrator.Fragments.CountFragment;
 import in.aqel.rapidpark_adminstrator.R;
-import in.aqel.rapidpark_adminstrator.Utils.AppConstants;
+import in.aqel.quickparksdk.Utils.AppConstants;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private static String LOG_TAG = "MainActivity";
     Context context = MainActivity.this;
     Firebase ref;
+    public Parking parking;
+    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        parking = new Parking();
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container, new CountFragment());
+        fragmentTransaction.commit();
 
         Firebase.setAndroidContext(this);
 
@@ -42,92 +67,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(AuthData authData) {
                 if (authData != null) {
+
                     // user is logged in
                     Log.d(LOG_TAG, " logged in");
                     Log.d(LOG_TAG, "id:" + authData.getUid());
 
-                    ref.child("parkings").addValueEventListener(new ValueEventListener() {
+                    Query queryRef = ref.child("parkings").orderByChild("user").equalTo(authData.getUid());
+
+                    queryRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
-                            System.out.println("There are " + snapshot.getChildrenCount() + " blog posts");
-                            for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                                Log.d(LOG_TAG, postSnapshot.getValue().toString());
+                            Log.d(LOG_TAG, "onChildAdded");
+                            Log.d(LOG_TAG, "Length of snapshot" + snapshot.getChildrenCount());
+                            if (!snapshot.exists()){
+                                Intent intent = new Intent(context, NewParkingActivity.class);
+                                startActivity(intent);
+                                finish();
+                                return;
                             }
-                        }
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
-                            System.out.println("The read failed: " + firebaseError.getMessage());
-                        }
-                    });
-
-                    Query queryRef = ref.child("parkings").orderByChild("totalCars");
-                    queryRef.addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(DataSnapshot snapshot, String previousChild) {
-                            Log.d(LOG_TAG, "onChildAdded for parking");
-                            Log.d(LOG_TAG, "Total number of parkings " + snapshot.getChildrenCount());
-                            for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                                Parking parking = postSnapshot.getValue(Parking.class);
-                                System.out.println(parking.getName() + " - " + parking.getUser());
+                            for (DataSnapshot parkingSnap: snapshot.getChildren()) {
+                                parking = parkingSnap.getValue(Parking.class);
+                                PrefUtils.setParking(context, parkingSnap.getValue().toString());
+                                PrefUtils.setParkingId(context, parkingSnap.getKey());
+                                System.out.println(parking.getName() + " - " + snapshot.getKey());
                             }
-                        }
-
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                            Log.d(LOG_TAG, snapshot.toString());
+                            Log.d(LOG_TAG, snapshot.getValue().toString());
                         }
 
                         @Override
                         public void onCancelled(FirebaseError firebaseError) {
-                            Log.d(LOG_TAG, firebaseError.getMessage());
+
                         }
                     });
-
-
-//                    Query query = ref.child("parkings").child("user").equalTo(authData.getUid());
-//                    Log.d(LOG_TAG, "User id for query is:" + authData.getUid());
-//                    query.addChildEventListener(new ChildEventListener() {
-//                        @Override
-//                        public void onChildAdded(DataSnapshot snapshot, String s) {
-//                            Log.d(LOG_TAG, "onChildAdded");
-//                            for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-//                                Parking parking = postSnapshot.getValue(Parking.class);
-//                                System.out.println(parking.getName() + " - " + parking.getUser());
-//                            }
-//
-//                        }
-//
-//                        @Override
-//                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                            Log.d(LOG_TAG, "child changed");
-//                        }
-//
-//                        @Override
-//                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(FirebaseError firebaseError) {
-//                            Log.d(LOG_TAG, firebaseError.getMessage());
-//
-//                        }
-//                    });
 
                 } else {
                     // user is not logged in
@@ -140,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public Parking getParking(){
+        return parking;
     }
 
     @Override
@@ -166,5 +142,41 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_qr_booking) {
+            // Handle the camera action
+
+        } else if (id == R.id.nav_counter) {
+            fragmentTransaction.replace(R.id.fragment_container, new CountFragment());
+
+        } else if (id == R.id.nav_logout) {
+            ref.unauth();
+            Intent intent = new Intent(context, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_update_details) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

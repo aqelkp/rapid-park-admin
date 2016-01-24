@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_qr_booking"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Scan Booked QR codes" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Account Balance" />
+        <item
+            android:id="@+id/nav_counter"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Vehicle counter" />
+
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_update_details"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Update Details" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>
