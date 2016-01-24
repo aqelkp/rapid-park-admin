@@ -4,6 +4,21 @@ package in.aqel.quickparksdk.Objects;
  * Created by Ahammad on 24/01/16.
  */
 public class Parking {
+    public Parking(String name, String id, Double lat, Double lon, int totalCars, int totalBikes,
+                   int bookingCharge, int parkingCharge, boolean countAvailable, boolean isOpen,
+                   boolean isBooking) {
+        this.name = name;
+        this.id = id;
+        this.lat = lat;
+        this.lon = lon;
+        this.totalCars = totalCars;
+        this.totalBikes = totalBikes;
+        this.bookingCharge = bookingCharge;
+        this.parkingCharge = parkingCharge;
+        this.countAvailable = countAvailable;
+        this.isOpen = isOpen;
+        this.isBooking = isBooking;
+    }
 
     public Parking() {
     }
