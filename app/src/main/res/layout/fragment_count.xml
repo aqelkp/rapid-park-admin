@@ -1,0 +1,149 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:orientation="horizontal"
+    tools:context="in.aqel.rapidpark_adminstrator.Fragments.CountFragment">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:text="+"
+            android:id="@+id/bPlusBike"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:background="#33691e"
+            android:textColor="#ffffff"
+            android:textSize="96sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=" Two wheeler"
+            android:layout_margin="4dp"
+            android:id="@+id/textView4"
+            android:drawableLeft="@drawable/ic_bike"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Total : 00"
+            android:id="@+id/tvTotalBike"
+            android:layout_margin="4dp"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Occupied : 00"
+            android:layout_margin="4dp"
+            android:id="@+id/tvOccupiedBike" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Empty : 00"
+            android:layout_margin="4dp"
+
+            android:id="@+id/tvEmptyBike"
+            android:layout_gravity="center_horizontal" />
+
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:text="-"
+            android:layout_marginTop="8dp"
+            android:id="@+id/bMinusBike"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffffff"
+            android:textSize="96sp"
+            android:background="#b71c1c" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:text="+"
+            android:id="@+id/bPlusCar"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:textSize="96sp"
+            android:textColor="#ffffff"
+            android:background="#33691e" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=" Four wheeler"
+            android:layout_margin="4dp"
+            android:drawableLeft="@drawable/ic_car"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Total : 00"
+            android:id="@+id/tvTotalCar"
+            android:layout_margin="4dp"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Occupied : 00"
+            android:layout_margin="4dp"
+            android:id="@+id/tvOccupiedCar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Empty : 00"
+            android:layout_margin="4dp"
+
+            android:id="@+id/tvEmptyCar"
+            android:layout_gravity="center_horizontal" />
+
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:text="-"
+            android:layout_marginTop="8dp"
+            android:id="@+id/bMinusCar"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffffff"
+            android:textSize="96sp"
+            android:background="#b71c1c" />
+    </LinearLayout>
+</LinearLayout>

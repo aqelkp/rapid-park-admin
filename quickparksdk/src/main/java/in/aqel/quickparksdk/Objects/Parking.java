@@ -22,6 +22,9 @@ public class Parking {
         this.isBooking = isBooking;
     }
 
+    public Parking() {
+    }
+
     public String getName() {
         return name;
     }
@@ -78,27 +81,27 @@ public class Parking {
         this.parkingCharge = parkingCharge;
     }
 
-    public boolean isCountAvailable() {
+    public Boolean isCountAvailable() {
         return countAvailable;
     }
 
-    public void setCountAvailable(boolean countAvailable) {
+    public void setCountAvailable(Boolean countAvailable) {
         this.countAvailable = countAvailable;
     }
 
-    public boolean isOpen() {
+    public Boolean isOpen() {
         return isOpen;
     }
 
-    public void setOpen(boolean open) {
+    public void setOpen(Boolean open) {
         isOpen = open;
     }
 
-    public boolean isBooking() {
+    public Boolean isBooking() {
         return isBooking;
     }
 
-    public void setBooking(boolean booking) {
+    public void setBooking(Boolean booking) {
         isBooking = booking;
     }
 
@@ -106,6 +109,25 @@ public class Parking {
 
     public String getId() {
         return id;
+    }
+
+    public Parking(String name, String id, Double lat, Double lon, int totalCars, int totalBikes,
+                   int currentBikes, int currentCars, String user, int bookingCharge,
+                   int parkingCharge, Boolean countAvailable, Boolean isOpen, Boolean isBooking) {
+        this.name = name;
+        this.id = id;
+        this.lat = lat;
+        this.lon = lon;
+        this.totalCars = totalCars;
+        this.totalBikes = totalBikes;
+        this.currentBikes = currentBikes;
+        this.currentCars = currentCars;
+        this.user = user;
+        this.bookingCharge = bookingCharge;
+        this.parkingCharge = parkingCharge;
+        this.countAvailable = countAvailable;
+        this.isOpen = isOpen;
+        this.isBooking = isBooking;
     }
 
     public void setId(String id) {
@@ -118,6 +140,15 @@ public class Parking {
     int totalBikes;
     int currentBikes;
     int currentCars;
+    String user;
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     public int getCurrentBikes() {
         return currentBikes;
@@ -137,6 +168,6 @@ public class Parking {
 
     int bookingCharge;
     int parkingCharge;
-    boolean countAvailable, isOpen, isBooking;
+    Boolean countAvailable, isOpen, isBooking;
 
 }

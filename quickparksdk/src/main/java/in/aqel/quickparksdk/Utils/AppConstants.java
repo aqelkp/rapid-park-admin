@@ -1,4 +1,4 @@
-package in.aqel.rapidpark_adminstrator.Utils;
+package in.aqel.quickparksdk.Utils;
 
 /**
  * Created by Ahammad on 24/01/16.
