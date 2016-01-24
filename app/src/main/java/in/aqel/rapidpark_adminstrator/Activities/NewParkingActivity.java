@@ -19,8 +19,8 @@ public class NewParkingActivity extends AppCompatActivity {
     boolean isBooking = false;
     EditText etName,  etLat, etLon, etTotalCars, etTotalBikes, etCurrentCars, etCurrentBikes;
     EditText etParkingCharge, etBookingCharge, etEmail;
-    String name;
-    int totalCars, totalBikes, pakringCharge;
+    String name, email;
+    int totalCars = 0, totalBikes =0, parkingCharge = 0, bookingCharge =0;
     Double lat, lon;
     Context context = NewParkingActivity.this;
 
@@ -65,10 +65,23 @@ public class NewParkingActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_done) {
+            email = etEmail.getText().toString();
+            name = etName.getText().toString();
+            lon = Double.parseDouble(etLon.getText().toString());
+            lat = Double.parseDouble(etLat.getText().toString());
+            totalCars = Integer.parseInt(etTotalCars.getText().toString());
+            totalBikes = Integer.parseInt(etTotalBikes.getText().toString());
+            parkingCharge = Integer.parseInt(etParkingCharge.getText().toString());
+            bookingCharge = Integer.parseInt(etBookingCharge.getText().toString());
 
+            if (name.isEmpty() || email.isEmpty() || lat == null || lon == null || totalBikes == 0
+                    || totalCars == 0 || parkingCharge == 0 || bookingCharge == 0 ){
 
-
+            }
             Parking parking = new Parking();
+            parking.setName(name);
+
+            parking.setBooking(isBooking);
             return true;
         }
 

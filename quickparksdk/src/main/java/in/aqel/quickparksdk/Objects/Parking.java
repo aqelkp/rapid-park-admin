@@ -112,7 +112,29 @@ public class Parking {
 
     String id;
     Double lat, lon;
-    int totalCars, totalBikes, bookingCharge, parkingCharge;
+    int totalCars;
+    int totalBikes;
+    int currentBikes;
+    int currentCars;
+
+    public int getCurrentBikes() {
+        return currentBikes;
+    }
+
+    public void setCurrentBikes(int currentBikes) {
+        this.currentBikes = currentBikes;
+    }
+
+    public int getCurrentCars() {
+        return currentCars;
+    }
+
+    public void setCurrentCars(int currentCars) {
+        this.currentCars = currentCars;
+    }
+
+    int bookingCharge;
+    int parkingCharge;
     boolean countAvailable, isOpen, isBooking;
 
 }
