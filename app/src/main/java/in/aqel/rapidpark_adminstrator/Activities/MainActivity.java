@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static String LOG_TAG = "MainActivity";
     Context context = MainActivity.this;
+    Firebase ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
 
-        Firebase ref = new Firebase(AppConstants.SERVER);
+        ref = new Firebase(AppConstants.SERVER);
 
         ref.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
@@ -42,9 +43,12 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(LOG_TAG, "Not logged in");
                     Intent intent = new Intent(context, LoginActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
+
+
     }
 
     @Override
@@ -62,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            ref.unauth();
             return true;
         }
 
