@@ -10,8 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
+import in.aqel.quickparksdk.Objects.Parking;
 import in.aqel.rapidpark_adminstrator.R;
 import in.aqel.rapidpark_adminstrator.Utils.AppConstants;
 
@@ -40,9 +46,88 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(LOG_TAG, " logged in");
                     Log.d(LOG_TAG, "id:" + authData.getUid());
 
-                    Intent intent = new Intent(context, NewParkingActivity.class);
-                    startActivity(intent);
+                    ref.child("parkings").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            System.out.println("There are " + snapshot.getChildrenCount() + " blog posts");
+                            for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                                Log.d(LOG_TAG, postSnapshot.getValue().toString());
+                            }
+                        }
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+                            System.out.println("The read failed: " + firebaseError.getMessage());
+                        }
+                    });
 
+                    Query queryRef = ref.child("parkings").orderByChild("totalCars");
+                    queryRef.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                            Log.d(LOG_TAG, "onChildAdded for parking");
+                            Log.d(LOG_TAG, "Total number of parkings " + snapshot.getChildrenCount());
+                            for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                                Parking parking = postSnapshot.getValue(Parking.class);
+                                System.out.println(parking.getName() + " - " + parking.getUser());
+                            }
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+                            Log.d(LOG_TAG, firebaseError.getMessage());
+                        }
+                    });
+
+
+//                    Query query = ref.child("parkings").child("user").equalTo(authData.getUid());
+//                    Log.d(LOG_TAG, "User id for query is:" + authData.getUid());
+//                    query.addChildEventListener(new ChildEventListener() {
+//                        @Override
+//                        public void onChildAdded(DataSnapshot snapshot, String s) {
+//                            Log.d(LOG_TAG, "onChildAdded");
+//                            for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+//                                Parking parking = postSnapshot.getValue(Parking.class);
+//                                System.out.println(parking.getName() + " - " + parking.getUser());
+//                            }
+//
+//                        }
+//
+//                        @Override
+//                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                            Log.d(LOG_TAG, "child changed");
+//                        }
+//
+//                        @Override
+//                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(FirebaseError firebaseError) {
+//                            Log.d(LOG_TAG, firebaseError.getMessage());
+//
+//                        }
+//                    });
 
                 } else {
                     // user is not logged in
