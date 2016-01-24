@@ -5,14 +5,16 @@ package in.aqel.quickparksdk.Objects;
  */
 public class Parking {
     public Parking(String name, String id, Double lat, Double lon, int totalCars, int totalBikes,
-                   int bookingCharge, int parkingCharge, boolean countAvailable, boolean isOpen,
-                   boolean isBooking) {
+                   int currentBikes, int currentCars, int bookingCharge, int parkingCharge, boolean
+                           countAvailable, boolean isOpen, boolean isBooking) {
         this.name = name;
         this.id = id;
         this.lat = lat;
         this.lon = lon;
         this.totalCars = totalCars;
         this.totalBikes = totalBikes;
+        this.currentBikes = currentBikes;
+        this.currentCars = currentCars;
         this.bookingCharge = bookingCharge;
         this.parkingCharge = parkingCharge;
         this.countAvailable = countAvailable;
