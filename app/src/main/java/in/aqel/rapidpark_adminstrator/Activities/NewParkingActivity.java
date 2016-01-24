@@ -76,7 +76,7 @@ public class NewParkingActivity extends AppCompatActivity {
 
             if (name.isEmpty() || email.isEmpty() || lat == null || lon == null || totalBikes == 0
                     || totalCars == 0 || parkingCharge == 0 || bookingCharge == 0 ){
-                Sna
+
             }
             Parking parking = new Parking();
             parking.setName(name);
