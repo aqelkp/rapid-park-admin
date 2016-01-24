@@ -86,6 +86,16 @@ public class Parking {
     }
 
     String name;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    String id;
     Double lat, lon;
     int totalCars, totalBikes, bookingCharge, parkingCharge;
     boolean countAvailable, isOpen, isBooking;

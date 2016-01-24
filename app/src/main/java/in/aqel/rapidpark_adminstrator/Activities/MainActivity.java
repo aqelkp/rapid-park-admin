@@ -40,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(LOG_TAG, " logged in");
                     Log.d(LOG_TAG, "id:" + authData.getUid());
 
+                    Intent intent = new Intent(context, NewParkingActivity.class);
+                    startActivity(intent);
+
+
                 } else {
                     // user is not logged in
                     Log.d(LOG_TAG, "Not logged in");
