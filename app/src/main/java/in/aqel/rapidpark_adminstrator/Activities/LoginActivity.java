@@ -17,6 +17,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.Firebase.ResultHandler;
 import com.firebase.client.FirebaseError;
 
+import in.aqel.quickparksdk.Objects.User;
 import in.aqel.rapidpark_adminstrator.R;
 import in.aqel.rapidpark_adminstrator.Utils.AppConstants;
 
@@ -33,6 +34,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Firebase.AuthResultHandler authResultHandler;
     TextView tvForgot;
     ProgressBar spinner;
+    boolean newUser = false;
+    String email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +65,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        String email = etEmail.getText().toString();
-        String password  = etPassword.getText().toString();
+        email = etEmail.getText().toString();
+        password  = etPassword.getText().toString();
 
 
         switch (v.getId()){
@@ -76,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onAuthenticated(AuthData authData) {
                         // Authenticated successfully with payload authData
                         Log.d(LOG_TAG, "Authenticated");
-//                        ref.child("users").setValue();
+
                         stopSpinner();
                         Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);
@@ -130,7 +133,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 ref.createUser(email, password, new ResultHandler() {
                     @Override
                     public void onSuccess() {
-                        onClick(bLogin);
+                        Log.d(LOG_TAG, "New user " + email + "created");
+                        // Create a handler to handle the result of the authentication
+                        authResultHandler = new Firebase.AuthResultHandler() {
+                            @Override
+                            public void onAuthenticated(AuthData authData) {
+                                // Authenticated successfully with payload authData
+                                Log.d(LOG_TAG, "Authenticated");
+
+                                User user = new User();
+                                user.setEmail(email);
+                                user.setRole("vendor");
+                                user.setId(authData.getUid());
+                                ref.child("users").push().setValue(user, new Firebase.CompletionListener() {
+                                    @Override
+                                    public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                                        stopSpinner();
+                                        Intent intent = new Intent(context, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                });
+                            }
+                            @Override
+                            public void onAuthenticationError(FirebaseError firebaseError) {
+                                // Authenticated failed with error firebaseError
+                                Log.d(LOG_TAG, firebaseError.getMessage());
+                                Snackbar
+                                        .make(etEmail, firebaseError.getMessage(), Snackbar.LENGTH_SHORT)
+                                        .show();
+                                stopSpinner();
+                            }
+                        };
+
+                        ref.authWithPassword( email, password, authResultHandler);
+
                     }
 
                     @Override
