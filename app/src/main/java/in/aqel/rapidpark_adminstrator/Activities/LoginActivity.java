@@ -1,5 +1,7 @@
 package in.aqel.rapidpark_adminstrator.Activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
+import com.firebase.client.Firebase.ResultHandler;
 import com.firebase.client.FirebaseError;
 
 import in.aqel.rapidpark_adminstrator.R;
@@ -18,13 +23,16 @@ import in.aqel.rapidpark_adminstrator.Utils.AppConstants;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText etEmail, etPassword;
-    Button bLogin;
+    Button bLogin, bNew;
     private static String LOG_TAG = "LoginActivity";
+    Context context = LoginActivity.this;
     Firebase ref;
     Firebase.AuthResultHandler authResultHandler;
+    TextView tvForgot;
+    ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,28 +48,40 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
         etEmail = (EditText) findViewById(R.id.etEmail);
         bLogin = (Button) findViewById(R.id.bLogin);
-        bLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(LOG_TAG, "Clicked Here");
+        bNew = (Button) findViewById(R.id.bNew);
+        tvForgot = (TextView) findViewById(R.id.tvForgot);
+        spinner = (ProgressBar) findViewById(R.id.spinner);
 
-                ref.createUser("aqel123@gmail.com", "password", new Firebase.ResultHandler() {
-                    @Override
-                    public void onSuccess() {
-                        Log.d(LOG_TAG, "User created");
-                    }
+        bLogin.setOnClickListener(this);
+        bNew.setOnClickListener(this);
+        tvForgot.setOnClickListener(this);
 
-                    @Override
-                    public void onError(FirebaseError firebaseError) {
-                        Log.d(LOG_TAG, firebaseError.getMessage());
-                    }
-                });
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        String email = etEmail.getText().toString();
+        String password  = etPassword.getText().toString();
+
+
+        switch (v.getId()){
+            case R.id.bLogin:
+
+                rotateSpineer();
                 // Create a handler to handle the result of the authentication
                 authResultHandler = new Firebase.AuthResultHandler() {
                     @Override
                     public void onAuthenticated(AuthData authData) {
                         // Authenticated successfully with payload authData
-                        Log.d(LOG_TAG, "Authnticated");
+                        Log.d(LOG_TAG, "Authenticated");
+//                        ref.child("users").setValue();
+                        stopSpinner();
+                        Intent intent = new Intent(context, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+
                     }
                     @Override
                     public void onAuthenticationError(FirebaseError firebaseError) {
@@ -70,18 +90,69 @@ public class LoginActivity extends AppCompatActivity {
                         Snackbar
                                 .make(etEmail, firebaseError.getMessage(), Snackbar.LENGTH_SHORT)
                                 .show();
+                        stopSpinner();
                     }
                 };
 
-                String email = etEmail.getText().toString();
-                String password  = etPassword.getText().toString();
                 ref.authWithPassword( email, password, authResultHandler);
 
-            }
-        });
 
+                break;
+
+            case R.id.tvForgot:
+
+                rotateSpineer();
+                ref.resetPassword(etEmail.getText().toString(), new ResultHandler() {
+                    @Override
+                    public void onSuccess() {
+
+                        Snackbar
+                                .make(tvForgot, "You will recieve an email shortly with a new password", Snackbar.LENGTH_SHORT)
+                                .show();
+                        stopSpinner();
+
+                    }
+
+                    @Override
+                    public void onError(FirebaseError firebaseError) {
+                        Snackbar
+                                .make(tvForgot, firebaseError.getMessage(), Snackbar.LENGTH_SHORT)
+                                .show();
+                        stopSpinner();
+
+                    }
+                });
+                break;
+
+            case R.id.bNew:
+
+                rotateSpineer();
+                ref.createUser(email, password, new ResultHandler() {
+                    @Override
+                    public void onSuccess() {
+                        onClick(bLogin);
+                    }
+
+                    @Override
+                    public void onError(FirebaseError firebaseError) {
+                        Log.d(LOG_TAG, firebaseError.getMessage());
+                        Snackbar
+                                .make(tvForgot, firebaseError.getMessage(), Snackbar.LENGTH_SHORT)
+                                .show();
+                        stopSpinner();
+                    }
+                });
+                break;
+        }
 
     }
 
+    private void stopSpinner() {
+        spinner.setVisibility(View.GONE);
+    }
+
+    private void rotateSpineer() {
+        spinner.setVisibility(View.VISIBLE);
+    }
 }
 

@@ -55,7 +55,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create new account"
-            android:id="@+id/button" />
+            android:id="@+id/bNew" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Forgot Password?"
+            android:id="@+id/tvForgot"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:padding="12dp"
+            android:textColor="#0c1831" />
+
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/spinner"
+            android:visibility="gone"
+            />
     </LinearLayout>
 
 </LinearLayout>
