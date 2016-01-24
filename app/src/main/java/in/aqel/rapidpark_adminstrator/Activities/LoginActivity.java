@@ -18,6 +18,7 @@ import com.firebase.client.Firebase.ResultHandler;
 import com.firebase.client.FirebaseError;
 
 import in.aqel.quickparksdk.Objects.User;
+import in.aqel.quickparksdk.Utils.PrefUtils;
 import in.aqel.rapidpark_adminstrator.R;
 import in.aqel.rapidpark_adminstrator.Utils.AppConstants;
 
@@ -140,6 +141,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             public void onAuthenticated(AuthData authData) {
                                 // Authenticated successfully with payload authData
                                 Log.d(LOG_TAG, "Authenticated");
+
+                                PrefUtils.setEmail(context, email);
 
                                 User user = new User();
                                 user.setEmail(email);

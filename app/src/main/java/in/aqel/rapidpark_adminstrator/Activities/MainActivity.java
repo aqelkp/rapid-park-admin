@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 if (authData != null) {
                     // user is logged in
                     Log.d(LOG_TAG, " logged in");
+                    Log.d(LOG_TAG, "id:" + authData.getUid());
+
                 } else {
                     // user is not logged in
                     Log.d(LOG_TAG, "Not logged in");
