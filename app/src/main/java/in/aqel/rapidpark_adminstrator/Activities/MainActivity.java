@@ -1,12 +1,24 @@
-package in.aqel.rapidpark_adminstrator;
+package in.aqel.rapidpark_adminstrator.Activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+
+import in.aqel.rapidpark_adminstrator.R;
+import in.aqel.rapidpark_adminstrator.Utils.AppConstants;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static String LOG_TAG = "MainActivity";
+    Context context = MainActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +27,24 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Firebase.setAndroidContext(this);
+
+        Firebase ref = new Firebase(AppConstants.SERVER);
+
+        ref.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData != null) {
+                    // user is logged in
+                    Log.d(LOG_TAG, " logged in");
+                } else {
+                    // user is not logged in
+                    Log.d(LOG_TAG, "Not logged in");
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
