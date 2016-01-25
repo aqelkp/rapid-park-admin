@@ -23,12 +23,12 @@ import com.firebase.client.ValueEventListener;
 import com.google.gson.Gson;
 
 import in.aqel.quickparksdk.Objects.Parking;
+import in.aqel.quickparksdk.Utils.AppConstants;
 import in.aqel.quickparksdk.Utils.PrefUtils;
 import in.aqel.rapidpark_adminstrator.Fragments.CountFragment;
 import in.aqel.rapidpark_adminstrator.Fragments.ScanQr;
 import in.aqel.rapidpark_adminstrator.Fragments.UpdateDetailsFragment;
 import in.aqel.rapidpark_adminstrator.R;
-import in.aqel.quickparksdk.Utils.AppConstants;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -176,19 +176,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_qr_booking) {
             // Handle the camera action
+            Log.d(LOG_TAG, "Clicked");
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
+            fragmentTransaction.replace(R.id.fragment_container, new ScanQr());
+            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_counter) {
             fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
             fragmentTransaction.replace(R.id.fragment_container, new CountFragment());
-            fragmentTransaction.commit();
-        }
-        else if (id==R.id.nav_qr_booking) {
-
-            fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-            fragmentTransaction.replace(R.id.fragment_container, new ScanQr());
             fragmentTransaction.commit();
         }
             else if (id == R.id.nav_logout) {
@@ -197,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_update_details) {
+
             fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, new UpdateDetailsFragment());
             fragmentTransaction.commit();

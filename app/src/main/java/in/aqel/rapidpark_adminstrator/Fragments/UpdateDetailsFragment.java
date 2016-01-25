@@ -64,16 +64,20 @@ public class UpdateDetailsFragment extends Fragment {
         parking = ((MainActivity) getActivity()).getParking();
         Log.d(LOG_TAG, "Parking in Frag" + new Gson().toJson(parking) );
 
-        name = parking.getName();
-        currentBikes = parking.getCurrentBikes();
-        currentCars = parking.getCurrentCars();
-        totalBikes = parking.getTotalBikes();
-        totalCars = parking.getTotalCars();
-        parkingCharge = parking.getParkingCharge();
-        bookingCharge = parking.getBookingCharge();
-        ref = new Firebase(AppConstants.SERVER);
-        context = getActivity();
+        try {
+            name = parking.getName();
+            currentBikes = parking.getCurrentBikes();
+            currentCars = parking.getCurrentCars();
+            totalBikes = parking.getTotalBikes();
+            totalCars = parking.getTotalCars();
+            parkingCharge = parking.getParkingCharge();
+            bookingCharge = parking.getBookingCharge();
+            ref = new Firebase(AppConstants.SERVER);
+            context = getActivity();
 
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
         isBooking = parking.getBookingCharge() > 0;
 
         etName = (EditText) view.findViewById(R.id.etName);
