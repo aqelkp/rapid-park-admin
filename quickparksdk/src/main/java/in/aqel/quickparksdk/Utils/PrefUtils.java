@@ -10,8 +10,11 @@ public class PrefUtils {
 
     private static String sp = "sPrefs";
     private static String spEmail = "email";
+    private static String spName = "name";
+    private static String spProfilePic = "profilepic";
     private static String spParking = "parkingObject";
     private static String spParkingId = "parkingId";
+    private static String spLogedin ="logedin";
 
     public static void setEmail(Context context, String email){
         SharedPreferences preferences = context.getSharedPreferences(sp, Context.MODE_PRIVATE);
@@ -49,6 +52,49 @@ public class PrefUtils {
         return pref.getString(spParkingId, null);
     }
 
+    public static String getProfilePic(Context context){
+        SharedPreferences pref = context.getSharedPreferences(sp, Context.MODE_PRIVATE);
+        return pref.getString(spProfilePic, null);
+    }
 
+    public static String getName(Context context){
+        SharedPreferences pref = context.getSharedPreferences(sp, Context.MODE_PRIVATE);
+        return pref.getString(spName, null);
+    }
+
+    public static void setName(Context context, String name) {
+        SharedPreferences preferences = context.getSharedPreferences(sp, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(spName, name);
+        editor.commit();
+    }
+
+    public static void setProfilePic(Context context, String profilepic) {
+        SharedPreferences preferences = context.getSharedPreferences(sp, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(spProfilePic, profilepic);
+        editor.commit();
+    }
+    public static void setLogedin(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(sp, Context.MODE_PRIVATE); // 0 - for private mode
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(spLogedin, true);
+        editor.commit();
+
+    }
+    public static Boolean isLogedin(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(sp, Context.MODE_PRIVATE); // 0 - for private mode
+        SharedPreferences.Editor editor = pref.edit();
+        return pref.getBoolean(spLogedin, false);
+
+    }
+
+
+    public static void clearpref(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(sp, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.commit();
+    }
 
 }
