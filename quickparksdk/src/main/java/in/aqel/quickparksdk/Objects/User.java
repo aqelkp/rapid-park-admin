@@ -8,6 +8,17 @@ public class User {
     String name;
     String role;
 
+    public User() {
+    }
+
+    public User(String email, String name, String role, String id, Float balance) {
+        this.email = email;
+        this.name = name;
+        this.role = role;
+        this.id = id;
+        this.balance = balance;
+    }
+
     public String getId() {
         return id;
     }
@@ -17,7 +28,7 @@ public class User {
     }
 
     String id;
-    float balance;
+    Float balance;
 
     public String getEmail() {
         return email;
@@ -43,11 +54,11 @@ public class User {
         this.role = role;
     }
 
-    public float getBalance() {
+    public Float getBalance() {
         return balance;
     }
 
-    public void setBalance(float balance) {
+    public void setBalance(Float balance) {
         this.balance = balance;
     }
 }
