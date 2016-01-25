@@ -20,6 +20,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.google.gson.Gson;
 
 import in.aqel.quickparksdk.Objects.Parking;
 import in.aqel.quickparksdk.Utils.PrefUtils;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        parking = new Parking();
+        parking = new Gson().fromJson(PrefUtils.getParking(context), Parking.class);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -91,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 PrefUtils.setParkingId(context, parkingSnap.getKey());
                                 System.out.println(parking.getName() + " - " + snapshot.getKey());
                             }
+                            CountFragment fragment = (CountFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                            fragment.updateParking(parking);
                             Log.d(LOG_TAG, snapshot.toString());
                             Log.d(LOG_TAG, snapshot.getValue().toString());
                         }
