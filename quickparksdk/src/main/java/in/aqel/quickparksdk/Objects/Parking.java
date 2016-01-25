@@ -4,9 +4,10 @@ package in.aqel.quickparksdk.Objects;
  * Created by Ahammad on 24/01/16.
  */
 public class Parking {
+
     public Parking(String name, String id, Double lat, Double lon, int totalCars, int totalBikes,
                    int currentBikes, int currentCars, int bookingCharge, int parkingCharge, boolean
-                           countAvailable, boolean isOpen, boolean isBooking) {
+                           countAvailable, boolean isOpen, boolean booking) {
         this.name = name;
         this.id = id;
         this.lat = lat;
@@ -19,7 +20,7 @@ public class Parking {
         this.parkingCharge = parkingCharge;
         this.countAvailable = countAvailable;
         this.isOpen = isOpen;
-        this.isBooking = isBooking;
+        this.booking = booking;
     }
 
     public Parking() {
@@ -98,11 +99,11 @@ public class Parking {
     }
 
     public Boolean isBooking() {
-        return isBooking;
+        return booking;
     }
 
     public void setBooking(Boolean booking) {
-        isBooking = booking;
+        this.booking = booking;
     }
 
     String name;
@@ -113,7 +114,7 @@ public class Parking {
 
     public Parking(String name, String id, Double lat, Double lon, int totalCars, int totalBikes,
                    int currentBikes, int currentCars, String user, int bookingCharge,
-                   int parkingCharge, Boolean countAvailable, Boolean isOpen, Boolean isBooking) {
+                   int parkingCharge, Boolean countAvailable, Boolean isOpen, Boolean booking) {
         this.name = name;
         this.id = id;
         this.lat = lat;
@@ -127,7 +128,7 @@ public class Parking {
         this.parkingCharge = parkingCharge;
         this.countAvailable = countAvailable;
         this.isOpen = isOpen;
-        this.isBooking = isBooking;
+        this.booking = booking;
     }
 
     public void setId(String id) {
@@ -168,6 +169,6 @@ public class Parking {
 
     int bookingCharge;
     int parkingCharge;
-    Boolean countAvailable, isOpen, isBooking;
+    Boolean countAvailable, isOpen, booking;
 
 }

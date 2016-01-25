@@ -20,10 +20,12 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.google.gson.Gson;
 
 import in.aqel.quickparksdk.Objects.Parking;
 import in.aqel.quickparksdk.Utils.PrefUtils;
 import in.aqel.rapidpark_adminstrator.Fragments.CountFragment;
+import in.aqel.rapidpark_adminstrator.Fragments.UpdateDetailsFragment;
 import in.aqel.rapidpark_adminstrator.R;
 import in.aqel.quickparksdk.Utils.AppConstants;
 
@@ -43,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        parking = new Parking();
+        Log.d(LOG_TAG, "Parking object saved" + PrefUtils.getParking(context));
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -91,6 +94,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 PrefUtils.setParkingId(context, parkingSnap.getKey());
                                 System.out.println(parking.getName() + " - " + snapshot.getKey());
                             }
+                            try{
+                                CountFragment fragment =
+                                        (CountFragment) getSupportFragmentManager()
+                                                .findFragmentById(R.id.fragment_container);
+                                fragment.updateParking(parking);
+                            } catch (Exception e ){
+                                e.printStackTrace();
+                            }
                             Log.d(LOG_TAG, snapshot.toString());
                             Log.d(LOG_TAG, snapshot.getValue().toString());
                         }
@@ -115,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public Parking getParking(){
+        Log.d(LOG_TAG, "Parking in MainAct" + new Gson().toJson(parking) );
         return parking;
     }
 
@@ -160,19 +172,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
         if (id == R.id.nav_qr_booking) {
             // Handle the camera action
 
         } else if (id == R.id.nav_counter) {
-            fragmentTransaction.replace(R.id.fragment_container, new CountFragment());
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
+            fragmentTransaction.replace(R.id.fragment_container, new CountFragment());
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_logout) {
             ref.unauth();
             Intent intent = new Intent(context, LoginActivity.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_update_details) {
-
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, new UpdateDetailsFragment());
+            fragmentTransaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
