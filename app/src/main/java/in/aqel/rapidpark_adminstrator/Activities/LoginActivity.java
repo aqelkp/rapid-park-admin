@@ -152,6 +152,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     @Override
                                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                                         stopSpinner();
+//                                        PrefUtils;
                                         Intent intent = new Intent(context, MainActivity.class);
                                         startActivity(intent);
                                         finish();

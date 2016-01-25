@@ -49,8 +49,13 @@ public class CountFragment extends Fragment implements View.OnClickListener{
         parking = ((MainActivity) getActivity()).getParking();
         ref = new Firebase(AppConstants.SERVER);
 
+        Log.d(LOG_TAG, "Fragment Started");
         setUpViews(view);
-        setUpCounts(parking);
+        try{
+            setUpCounts(parking);
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
 
         return view;
     }
