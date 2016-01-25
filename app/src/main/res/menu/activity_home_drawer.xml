@@ -4,15 +4,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_qr_booking"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_fingerprint_black_24dp"
             android:title="Scan Booked QR codes" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
             android:title="Account Balance" />
         <item
             android:id="@+id/nav_counter"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_motorcycle_black_24dp"
             android:title="Vehicle counter" />
 
     </group>
@@ -21,11 +21,11 @@
         <menu>
             <item
                 android:id="@+id/nav_update_details"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_account_box_black_24dp"
                 android:title="Update Details" />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_power_settings_new_black_24dp"
                 android:title="Logout" />
         </menu>
     </item>
