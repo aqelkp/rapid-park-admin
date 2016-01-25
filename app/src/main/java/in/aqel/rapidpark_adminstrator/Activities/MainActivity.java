@@ -177,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_qr_booking) {
             // Handle the camera action
 
+
         } else if (id == R.id.nav_counter) {
             fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
@@ -184,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.commit();
         }
         else if (id==R.id.nav_qr_booking) {
+
             fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
             fragmentTransaction.replace(R.id.fragment_container, new ScanQr());

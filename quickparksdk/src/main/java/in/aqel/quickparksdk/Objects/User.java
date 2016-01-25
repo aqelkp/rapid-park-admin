@@ -11,7 +11,7 @@ public class User {
     public User() {
     }
 
-    public User(String email, String name, String role, String id, Float balance) {
+    public User(String email, String name, String role, String id, Double balance) {
         this.email = email;
         this.name = name;
         this.role = role;
@@ -28,7 +28,7 @@ public class User {
     }
 
     String id;
-    Float balance;
+    Double balance;
 
     public String getEmail() {
         return email;
@@ -54,11 +54,11 @@ public class User {
         this.role = role;
     }
 
-    public Float getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(Float balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 }
