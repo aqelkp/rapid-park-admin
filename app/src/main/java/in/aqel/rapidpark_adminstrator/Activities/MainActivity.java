@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import in.aqel.quickparksdk.Objects.Parking;
 import in.aqel.quickparksdk.Utils.PrefUtils;
 import in.aqel.rapidpark_adminstrator.Fragments.CountFragment;
+import in.aqel.rapidpark_adminstrator.Fragments.ScanQr;
 import in.aqel.rapidpark_adminstrator.Fragments.UpdateDetailsFragment;
 import in.aqel.rapidpark_adminstrator.R;
 import in.aqel.quickparksdk.Utils.AppConstants;
@@ -181,7 +182,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             fragmentTransaction.replace(R.id.fragment_container, new CountFragment());
             fragmentTransaction.commit();
-        } else if (id == R.id.nav_logout) {
+        }
+        else if (id==R.id.nav_qr_booking) {
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+            fragmentTransaction.replace(R.id.fragment_container, new ScanQr());
+            fragmentTransaction.commit();
+        }
+            else if (id == R.id.nav_logout) {
             ref.unauth();
             Intent intent = new Intent(context, LoginActivity.class);
             startActivity(intent);
